@@ -25,8 +25,8 @@ public class DonationController {
         return new ResponseEntity<>(service.save(donationDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<DonationDTO> update(@RequestBody DonationDTO donationDTO){
+    @PutMapping("/{id}")
+    public ResponseEntity<DonationDTO> update(@PathVariable Long id, @RequestBody DonationDTO donationDTO){
         return new ResponseEntity<>(service.update(donationDTO), HttpStatus.OK);
     }
 
@@ -46,12 +46,12 @@ public class DonationController {
     }
 
     @GetMapping(value = "/donor/{id}")
-    public ResponseEntity<List<DonationDTO>> findByDonorId(@PathVariable Long id){
+    public ResponseEntity<List<DonationDTO>> findByDonor(@PathVariable Long id){
         return new ResponseEntity<>(service.findByDonorId(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/bloodBank/{id}")
-    public ResponseEntity<List<DonationDTO>> findByBloodBankId(@PathVariable Long id){
+    public ResponseEntity<List<DonationDTO>> findByBloodBank(@PathVariable Long id){
         return new ResponseEntity<>(service.findByBloodBankId(id), HttpStatus.OK);
     }
 
@@ -61,7 +61,7 @@ public class DonationController {
     }
 
     @GetMapping(value = "/date/{date}")
-    public ResponseEntity<List<DonationDTO>> findByDate(@PathVariable Date date){
-        return new ResponseEntity<>(service.findByDate(date), HttpStatus.OK);
+    public ResponseEntity<List<DonationDTO>> findByDonationDate(@PathVariable Date date){
+        return new ResponseEntity<>(service.findByDonationDate(date), HttpStatus.OK);
     }
 }

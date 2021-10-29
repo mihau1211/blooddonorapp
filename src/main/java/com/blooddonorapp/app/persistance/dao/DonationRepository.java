@@ -1,6 +1,8 @@
 package com.blooddonorapp.app.persistance.dao;
 
+import com.blooddonorapp.app.models.BloodBank;
 import com.blooddonorapp.app.models.Donation;
+import com.blooddonorapp.app.models.Donor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,11 +24,11 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
     @Override
     void deleteById(Long id);
 
-    List<Donation> findByDonorId(Long id);
+    List<Donation> findByDonor(Donor donor);
 
-    List<Donation> findByBloodBankId(Long id);
+    List<Donation> findByBloodBank(BloodBank bloodBank);
 
     List<Donation> findByBloodType(String bloodType);
 
-    List<Donation> findByDate(Date date);
+    List<Donation> findByDonationDate(Date date);
 }

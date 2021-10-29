@@ -1,10 +1,65 @@
 package com.blooddonorapp.app.controllers;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
+import com.blooddonorapp.app.persistance.services.BloodBankService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/bloodBank")
 public class BloodBankController {
+    BloodBankService service;
+
+    @Autowired
+    public BloodBankController(BloodBankService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<BloodBankDTO> save(@RequestBody BloodBankDTO bloodBankDTO) {
+        return new ResponseEntity<>(service.save(bloodBankDTO), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        service.deleteById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BloodBankDTO>> findAll() {
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BloodBankDTO> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/username/{username}")
+    public ResponseEntity<BloodBankDTO> findByUsername(@PathVariable String username) {
+        return new ResponseEntity<>(service.findByUsername(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<BloodBankDTO> findByEmail(@PathVariable String email) {
+        return new ResponseEntity<>(service.findByEmail(email), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/city/{city}")
+    public ResponseEntity<List<BloodBankDTO>> findByCity(@PathVariable String city) {
+        return new ResponseEntity<>(service.findByCity(city), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/donor/{id}")
+    public ResponseEntity<BloodBankDTO> findByUsername(@PathVariable Long id){
+        return new ResponseEntity<>(service.findByDonorId(id), HttpStatus.OK);
+
+    }
 }

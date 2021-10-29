@@ -1,15 +1,22 @@
 package com.blooddonorapp.app.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Donor")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class Donor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long donorId;
+    private Date birthdate;
     private String username;
     private String email;
     private String password;
@@ -23,26 +30,14 @@ public class Donor {
     private Date lastDonationDate;
     private int points;
 
+    @ManyToOne
+    @JoinColumn(name = "bloodBankId")
+    private BloodBank bloodBank;
+
     @OneToMany(mappedBy="donor")
     private List<Donation> donations;
 
-    public Donor() {
-    }
-
-    public Donor(Long donorId, String username, String email, String password, String name, String surname, Gender gender, BloodType bloodType, String city, int numberOfDonations, Date firstDonationDate, Date lastDonationDate, int points, List<Donation> donations) {
-        this.donorId = donorId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
-        this.bloodType = bloodType;
-        this.city = city;
-        this.numberOfDonations = numberOfDonations;
-        this.firstDonationDate = firstDonationDate;
-        this.lastDonationDate = lastDonationDate;
-        this.points = points;
-        this.donations = donations;
+    public void addDonation(Donation donation){
+        this.donations.add(donation);
     }
 }

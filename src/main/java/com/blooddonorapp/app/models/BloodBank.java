@@ -1,9 +1,16 @@
 package com.blooddonorapp.app.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class BloodBank {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,4 +23,11 @@ public class BloodBank {
 
     @OneToMany(mappedBy="bloodBank")
     private List<Donation> donations;
+
+    @OneToMany(mappedBy = "bloodBank")
+    private List<Donor> donors;
+
+    public void addDonor(Donor donor){
+        donors.add(donor);
+    }
 }

@@ -1,12 +1,16 @@
 package com.blooddonorapp.app.models;
 
-import lombok.Builder;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,16 +25,4 @@ public class Donation {
     private Date donationDate;
     private BloodType bloodType;
     private int quantity;
-
-    public Donation() {
-    }
-
-    public Donation(Long donationId, Donor donor, BloodBank bloodBank, Date donationDate, BloodType bloodType, int quantity) {
-        this.donationId = donationId;
-        this.donor = donor;
-        this.bloodBank = bloodBank;
-        this.donationDate = donationDate;
-        this.bloodType = bloodType;
-        this.quantity = quantity;
-    }
 }

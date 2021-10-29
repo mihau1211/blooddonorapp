@@ -1,29 +1,37 @@
 package com.blooddonorapp.app.persistance.services;
 
+import com.blooddonorapp.app.exceptions.bloodBank.BloodBankNotFoundException;
 import com.blooddonorapp.app.exceptions.donation.DonationNotFoundException;
 import com.blooddonorapp.app.exceptions.donor.DonorNotFoundException;
+import com.blooddonorapp.app.models.BloodBank;
+import com.blooddonorapp.app.models.Donation;
 import com.blooddonorapp.app.models.Donor;
+import com.blooddonorapp.app.persistance.dao.BloodBankRepository;
 import com.blooddonorapp.app.persistance.dao.DonationRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
-import com.blooddonorapp.app.persistance.services.mappers.DonorMapperInterface;
+import com.blooddonorapp.app.persistance.services.mappers.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DonorService {
-    private DonorMapperInterface mapper;
+    private DonorMapper mapper;
     private DonorRepository repository;
     private DonationRepository donationRepository;
+    private BloodBankRepository bloodBankRepository;
 
     @Autowired
-    public DonorService(DonorMapperInterface mapper, DonorRepository repository, DonationRepository donationRepository) {
+    public DonorService(DonorMapper mapper, DonorRepository repository, DonationRepository donationRepository, BloodBankRepository bloodBankRepository) {
         this.mapper = mapper;
         this.repository = repository;
         this.donationRepository = donationRepository;
+        this.bloodBankRepository = bloodBankRepository;
     }
 
     private DonationNotFoundException donationNotFoundException(Long id){
@@ -34,8 +42,13 @@ public class DonorService {
         return new DonorNotFoundException(id);
     }
 
+    private BloodBankNotFoundException bloodBankNotFoundException(Long id){
+        return new BloodBankNotFoundException(id);
+    }
+
     public DonorDTO save(final DonorDTO donorDTO){
-        Donor donor = repository.save(mapper.toMap(donorDTO));
+        BloodBank bloodBank = bloodBankRepository.findById(donorDTO.getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donorDTO.getBloodBankId()));
+        Donor donor = repository.save(mapper.toMap(donorDTO, bloodBank));
 
         return mapper.toDTO(donor);
     }
@@ -59,9 +72,10 @@ public class DonorService {
     }
 
     public DonorDTO update(final DonorDTO donorDTO){
+        BloodBank bloodBank = bloodBankRepository.findById(donorDTO.getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donorDTO.getBloodBankId()));
         Donor donor = repository.findById(donorDTO.getDonorId()).orElseThrow(() -> donorNotFoundException(donorDTO.getDonorId()));
 
-        return mapper.toDTO(repository.save(mapper.toMap(donorDTO)));
+        return mapper.toDTO(repository.save(mapper.toMap(donorDTO, bloodBank)));
     }
 
     public DonorDTO findByUsername(final String username){
@@ -90,11 +104,14 @@ public class DonorService {
         return mapper.toList(repository.findByCity(city));
     }
 
+    public List<DonorDTO> findByBirthdate(final Date birthdate){
+        return mapper.toList(repository.findByBirthdate(birthdate));
+    }
+
     public DonorDTO findDonorByDonationId(final Long id){
-        donationRepository.findById(id).orElseThrow(() -> donationNotFoundException(id));
+        Donation donation = donationRepository.findById(id).orElseThrow(() -> donationNotFoundException(id));
+        Donor donor = repository.findById(donation.getDonor().getDonorId()).orElseThrow(() -> donorNotFoundException(donation.getDonor().getDonorId()));
 
-        Optional<Donor> optionalDonor = repository.findDonorByDonationId(id);
-
-        return mapper.toDTO(optionalDonor.get());
+        return mapper.toDTO(donor);
     }
 }

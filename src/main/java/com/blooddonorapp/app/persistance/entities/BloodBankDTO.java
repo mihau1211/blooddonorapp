@@ -1,14 +1,20 @@
 package com.blooddonorapp.app.persistance.entities;
 
 import com.blooddonorapp.app.models.Donation;
-import lombok.Builder;
-import lombok.Data;
+import com.blooddonorapp.app.models.Donor;
+import lombok.*;
 
+import javax.persistence.Id;
 import java.util.List;
 
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class BloodBankDTO {
+    @Id
     private Long bloodBankId;
     private String username;
     private String email;
@@ -16,17 +22,5 @@ public class BloodBankDTO {
     private String city;
     private String donationCenter;
     private List<Donation> donations;
-
-    public BloodBankDTO() {
-    }
-
-    public BloodBankDTO(Long bloodBankId, String username, String email, String password, String city, String donationCenter, List<Donation> donations) {
-        this.bloodBankId = bloodBankId;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.city = city;
-        this.donationCenter = donationCenter;
-        this.donations = donations;
-    }
+    private List<Donor> donors;
 }

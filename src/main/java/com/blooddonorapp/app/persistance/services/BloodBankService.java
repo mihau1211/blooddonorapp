@@ -3,10 +3,11 @@ package com.blooddonorapp.app.persistance.services;
 import com.blooddonorapp.app.exceptions.bloodBank.BloodBankNotFoundException;
 import com.blooddonorapp.app.exceptions.donor.DonorNotFoundException;
 import com.blooddonorapp.app.models.BloodBank;
+import com.blooddonorapp.app.models.Donor;
 import com.blooddonorapp.app.persistance.dao.BloodBankRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
-import com.blooddonorapp.app.persistance.services.mappers.BloodBankMapperInterface;
+import com.blooddonorapp.app.persistance.services.mappers.BloodBankMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,12 @@ import java.util.Optional;
 
 @Service
 public class BloodBankService {
-    private BloodBankMapperInterface mapper;
+    private BloodBankMapper mapper;
     private BloodBankRepository repository;
     private DonorRepository donorRepository;
 
     @Autowired
-    public BloodBankService(BloodBankMapperInterface mapper, BloodBankRepository repository, DonorRepository donorRepository) {
+    public BloodBankService(BloodBankMapper mapper, BloodBankRepository repository, DonorRepository donorRepository) {
         this.mapper = mapper;
         this.repository = repository;
         this.donorRepository = donorRepository;
@@ -81,11 +82,9 @@ public class BloodBankService {
     }
 
     public BloodBankDTO findByDonorId(final Long id){
-        donorRepository.findById(id).orElseThrow(() -> donorNotFoundException(id));
+        Donor donor = donorRepository.findById(id).orElseThrow(() -> donorNotFoundException(id));
+        BloodBank bloodBank = repository.findById(donor.getBloodBank().getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donor.getBloodBank().getBloodBankId()));
 
-        Optional<BloodBank> optionalBloodBank = repository.findByDonorId(id);
-
-        return mapper.toDTO(optionalBloodBank.get());
+        return mapper.toDTO(bloodBank);
     }
-
 }
