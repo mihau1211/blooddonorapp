@@ -5,6 +5,7 @@ import com.blooddonorapp.app.models.BloodType;
 import com.blooddonorapp.app.models.Donor;
 import com.blooddonorapp.app.models.Gender;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +13,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class DonorMapper {
+
+    private DonationMapper donationMapper = new DonationMapper();
+
     public Donor toMap(final DonorDTO donorDTO, final BloodBank bloodBank){
         return Donor.builder()
                 .donorId(donorDTO.getDonorId())
@@ -26,7 +30,7 @@ public class DonorMapper {
                 .bloodType(BloodType.valueOf(donorDTO.getBloodType()))
                 .city(donorDTO.getCity())
                 .points(donorDTO.getPoints())
-                .donations(donorDTO.getDonations())
+//                .donations(donorDTO.getDonations())
                 .build();
     }
 
@@ -44,7 +48,7 @@ public class DonorMapper {
                 .bloodType(donor.getBloodType().toString())
                 .city(donor.getCity())
                 .points(donor.getPoints())
-                .donations(donor.getDonations())
+                .donations(donationMapper.toList(donor.getDonations()))
                 .build();
     }
 

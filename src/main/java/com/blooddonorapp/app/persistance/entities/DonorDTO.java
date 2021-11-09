@@ -28,5 +28,5 @@ public class DonorDTO {
     private String bloodType;
     private String city;
     private int points;
-    private List<Donation> donations;
+    private List<DonationDTO> donations;
 }

@@ -9,15 +9,14 @@ import com.blooddonorapp.app.models.Donor;
 import com.blooddonorapp.app.persistance.dao.BloodBankRepository;
 import com.blooddonorapp.app.persistance.dao.DonationRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
+import com.blooddonorapp.app.persistance.entities.DonationDTO;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
 import com.blooddonorapp.app.persistance.services.mappers.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DonorService {
@@ -48,7 +47,9 @@ public class DonorService {
 
     public DonorDTO save(final DonorDTO donorDTO){
         BloodBank bloodBank = bloodBankRepository.findById(donorDTO.getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donorDTO.getBloodBankId()));
+        donorDTO.set
         Donor donor = repository.save(mapper.toMap(donorDTO, bloodBank));
+        donor.setDonations(Collections.emptyList());
 
         return mapper.toDTO(donor);
     }

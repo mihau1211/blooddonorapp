@@ -21,6 +21,6 @@ public class BloodBankDTO {
     private String password;
     private String city;
     private String donationCenter;
-    private List<Donation> donations;
-    private List<Donor> donors;
+    private List<DonationDTO> donations;
+    private List<DonorDTO> donors;
 }

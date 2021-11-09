@@ -25,6 +25,11 @@ public class BloodBankController {
         return new ResponseEntity<>(service.save(bloodBankDTO), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<BloodBankDTO> update(@PathVariable Long id, @RequestBody BloodBankDTO bloodBankDTO){
+        return new ResponseEntity<>(service.update(id, bloodBankDTO), HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);

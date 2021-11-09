@@ -8,6 +8,8 @@ import com.blooddonorapp.app.persistance.dao.BloodBankRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
 import com.blooddonorapp.app.persistance.services.mappers.BloodBankMapper;
+import com.blooddonorapp.app.persistance.services.mappers.DonationMapper;
+import com.blooddonorapp.app.persistance.services.mappers.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ import java.util.Optional;
 @Service
 public class BloodBankService {
     private BloodBankMapper mapper;
+    private DonationMapper donationMapper;
+    private DonorMapper donorMapper;
     private BloodBankRepository repository;
     private DonorRepository donorRepository;
 
@@ -39,6 +43,34 @@ public class BloodBankService {
         BloodBank bloodBank = repository.save(mapper.toMap(bloodBankDTO));
 
         return mapper.toDTO(bloodBank);
+    }
+
+    public BloodBankDTO update(final Long id, final BloodBankDTO bloodBankDTO){
+        BloodBank bloodBank = repository.findById(id).orElseThrow(() -> bloodBankNotFoundException(id));
+        bloodBankDTO.setBloodBankId(bloodBank.getBloodBankId());
+        if(bloodBankDTO.getUsername() == null){
+            bloodBankDTO.setUsername(bloodBank.getUsername());
+        }
+        if(bloodBankDTO.getEmail() == null){
+            bloodBankDTO.setEmail(bloodBank.getEmail());
+        }
+        if(bloodBankDTO.getPassword() == null){
+            bloodBankDTO.setPassword(bloodBank.getPassword());
+        }
+        if(bloodBankDTO.getCity() == null){
+            bloodBankDTO.setCity(bloodBank.getCity());
+        }
+        if(bloodBankDTO.getDonationCenter() == null){
+            bloodBankDTO.setDonationCenter(bloodBank.getDonationCenter());
+        }
+        if(bloodBankDTO.getDonations() == null){
+            bloodBankDTO.setDonations(donationMapper.toList(bloodBank.getDonations()));
+        }
+        if(bloodBankDTO.getDonors() == null){
+            bloodBankDTO.setDonors(donorMapper.toList(bloodBank.getDonors()));
+        }
+
+        return mapper.toDTO(repository.save(mapper.toMap(bloodBankDTO)));
     }
 
     public BloodBankDTO findById(final Long id){

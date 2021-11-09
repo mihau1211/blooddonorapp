@@ -48,6 +48,8 @@ public class DonationService {
     public DonationDTO save(final DonationDTO donationDTO){
         Donor donor = donorRepository.findById(donationDTO.getDonorId()).orElseThrow(() -> donorNotFoundException(donationDTO.getDonorId()));
         BloodBank bloodBank = bloodBankRepository.findById(donationDTO.getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donationDTO.getBloodBankId()));
+        System.out.println(donationDTO.getQuantity());
+
         Donation donation = repository.save(mapper.toMap(donationDTO, donor, bloodBank));
         return mapper.toDTO(donation);
     }
@@ -70,10 +72,31 @@ public class DonationService {
         }
     }
 
-    public DonationDTO update(final DonationDTO donationDTO){
-        Donation donation = repository.findById(donationDTO.getDonationId()).orElseThrow(() -> donationNotFoundException(donationDTO.getDonationId()));
+    public DonationDTO update(final Long id, final DonationDTO donationDTO){
+        Donation donation = repository.findById(id).orElseThrow(() -> donationNotFoundException(donationDTO.getDonationId()));
         Donor donor = donorRepository.findById(donationDTO.getDonorId()).orElseThrow(() -> donorNotFoundException(donationDTO.getDonorId()));
         BloodBank bloodBank = bloodBankRepository.findById(donationDTO.getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donationDTO.getBloodBankId()));
+
+        donationDTO.setDonationId(donation.getDonationId());
+        if (donationDTO.getDonorId() == null){
+            donationDTO.setDonorId(donation.getDonationId());
+        }
+        if (donationDTO.getBloodBankId() == null){
+            donationDTO.setBloodBankId(donation.getBloodBank().getBloodBankId());
+        }
+//        if (donationDTO.getStatus() == null){
+//            donationDTO.setStatus(donation.getStatus());
+//        }
+        if (donationDTO.getDonationDate() == null){
+            donationDTO.setDonationDate(donation.getDonationDate());
+        }
+        if (donationDTO.getBloodType() == null){
+            donationDTO.setBloodType(donation.getBloodType().toString());
+        }
+        if (donationDTO.getQuantity() == 0){
+            donationDTO.setQuantity(donation.getQuantity());
+        }
+
         return mapper.toDTO(repository.save(mapper.toMap(donationDTO, donor, bloodBank)));
     }
 

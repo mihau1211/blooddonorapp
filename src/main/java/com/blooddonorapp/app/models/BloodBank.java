@@ -21,10 +21,10 @@ public class BloodBank {
     private String city;
     private String donationCenter;
 
-    @OneToMany(mappedBy="bloodBank")
+    @OneToMany(mappedBy="bloodBank", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Donation> donations;
 
-    @OneToMany(mappedBy = "bloodBank")
+    @OneToMany(mappedBy = "bloodBank", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Donor> donors;
 
     public void addDonor(Donor donor){

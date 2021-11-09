@@ -27,7 +27,7 @@ public class DonationController {
 
     @PutMapping("/{id}")
     public ResponseEntity<DonationDTO> update(@PathVariable Long id, @RequestBody DonationDTO donationDTO){
-        return new ResponseEntity<>(service.update(donationDTO), HttpStatus.OK);
+        return new ResponseEntity<>(service.update(id, donationDTO), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}")

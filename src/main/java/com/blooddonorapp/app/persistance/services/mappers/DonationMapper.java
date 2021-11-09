@@ -7,6 +7,7 @@ import com.blooddonorapp.app.models.Donor;
 import com.blooddonorapp.app.persistance.entities.DonationDTO;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class DonationMapper {
                 .donationId(donation.getDonationId())
                 .donorId(donation.getDonor().getDonorId())
                 .bloodBankId(donation.getBloodBank().getBloodBankId())
+                .bloodType(donation.getBloodType().toString())
                 .donationDate(donation.getDonationDate())
                 .quantity(donation.getQuantity())
                 .build();
