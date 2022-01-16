@@ -45,17 +45,6 @@ public class BloodBankController {
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<BloodBankDTO> findByUsername(@PathVariable String username) {
-        return new ResponseEntity<>(service.findByUsername(username), HttpStatus.OK);
-    }
-
-    @GetMapping("/email/{email}")
-    public ResponseEntity<BloodBankDTO> findByEmail(@PathVariable String email) {
-        return new ResponseEntity<>(service.findByEmail(email), HttpStatus.OK);
-
-    }
-
     @GetMapping("/city/{city}")
     public ResponseEntity<List<BloodBankDTO>> findByCity(@PathVariable String city) {
         return new ResponseEntity<>(service.findByCity(city), HttpStatus.OK);

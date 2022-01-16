@@ -18,9 +18,6 @@ public class Donor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long donorId;
     private Date birthdate;
-    private String username;
-    private String email;
-    private String password;
     private String name;
     private String surname;
     private Gender gender;

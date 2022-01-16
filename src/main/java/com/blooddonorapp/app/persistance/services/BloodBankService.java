@@ -12,6 +12,7 @@ import com.blooddonorapp.app.persistance.services.mappers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,8 @@ public class BloodBankService {
 
     public BloodBankDTO save(final BloodBankDTO bloodBankDTO){
         BloodBank bloodBank = repository.save(bloodBankMapper.toMap(bloodBankDTO));
+        bloodBank.setDonations(Collections.emptyList());
+        bloodBank.setDonors(Collections.emptyList());
 
         return bloodBankMapper.toDto(bloodBank);
     }
@@ -50,15 +53,6 @@ public class BloodBankService {
         BloodBank bloodBank = repository.findById(id).orElseThrow(() -> bloodBankNotFoundException(id));
         System.out.println(bloodBank);
         bloodBankDTO.setBloodBankId(bloodBank.getBloodBankId());
-        if(bloodBankDTO.getUsername() != null){
-            bloodBank.setUsername(bloodBankDTO.getUsername());
-        }
-        if(bloodBankDTO.getEmail() != null){
-            bloodBank.setEmail(bloodBankDTO.getEmail());
-        }
-        if(bloodBankDTO.getPassword() != null){
-            bloodBank.setPassword(bloodBankDTO.getPassword());
-        }
         if(bloodBankDTO.getCity() != null){
             bloodBank.setCity(bloodBankDTO.getCity());
         }
@@ -71,7 +65,6 @@ public class BloodBankService {
         if(bloodBankDTO.getDonors() != null){
             bloodBank.setDonors(donorMapper.toList(bloodBankDTO.getDonors()));
         }
-//        System.out.println(bloodBankDTO);
 
         return bloodBankMapper.toDto(repository.save(bloodBank));
     }
@@ -99,18 +92,6 @@ public class BloodBankService {
 
         return bloodBankMapper.toDto(repository.save(bloodBankMapper.toMap(bloodBankDTO)));
    }
-
-   public BloodBankDTO findByUsername(final String username){
-        Optional<BloodBank> optionalBloodBank = repository.findByUsername(username);
-
-        return bloodBankMapper.toDto(optionalBloodBank.get());
-   }
-
-    public BloodBankDTO findByEmail(final String email){
-        Optional<BloodBank> optionalBloodBank = repository.findByEmail(email);
-
-        return bloodBankMapper.toDto(optionalBloodBank.get());
-    }
 
     public List<BloodBankDTO> findByCity(final String city){
         return bloodBankMapper.toListDto(repository.findByCity(city));

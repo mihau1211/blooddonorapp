@@ -1,10 +1,7 @@
 package com.blooddonorapp.app.persistance.services.mappers;
 
 import com.blooddonorapp.app.models.BloodBank;
-import com.blooddonorapp.app.models.Donation;
 import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
-import com.blooddonorapp.app.persistance.entities.DonationDTO;
-//import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,9 +29,6 @@ public class BloodBankMapperImpl{
         BloodBank bloodBank = new BloodBank();
 
         bloodBank.setBloodBankId(bloodBankDTO.getBloodBankId());
-        bloodBank.setUsername(bloodBankDTO.getUsername());
-        bloodBank.setEmail(bloodBankDTO.getEmail());
-        bloodBank.setPassword(bloodBankDTO.getPassword());
         bloodBank.setCity(bloodBankDTO.getCity());
         bloodBank.setDonationCenter(bloodBankDTO.getDonationCenter());
         bloodBank.setDonations(donationMapper.toList(bloodBankDTO.getDonations()));
@@ -52,9 +46,6 @@ public class BloodBankMapperImpl{
         BloodBankDTO bloodBankDTO = new BloodBankDTO();
 
         bloodBankDTO.setBloodBankId(bloodBank.getBloodBankId());
-        bloodBankDTO.setUsername(bloodBank.getUsername());
-        bloodBankDTO.setEmail(bloodBank.getEmail());
-        bloodBankDTO.setPassword(bloodBank.getPassword());
         bloodBankDTO.setCity(bloodBank.getCity());
         bloodBankDTO.setDonationCenter(bloodBank.getDonationCenter());
         bloodBankDTO.setDonations(donationMapper.toListDto(bloodBank.getDonations()));

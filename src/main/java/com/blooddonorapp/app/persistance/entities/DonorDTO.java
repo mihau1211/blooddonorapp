@@ -1,9 +1,7 @@
 package com.blooddonorapp.app.persistance.entities;
 
-import com.blooddonorapp.app.models.Donation;
 import lombok.*;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
 import java.util.List;

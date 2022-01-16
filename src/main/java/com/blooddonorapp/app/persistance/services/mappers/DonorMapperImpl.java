@@ -20,7 +20,6 @@ public class DonorMapperImpl {
         this.donationMapper = donationMapper;
     }
 
-//    @Override
     public DonorDTO toDto(Donor donor) {
         if(donor == null){
             return null;
@@ -30,11 +29,8 @@ public class DonorMapperImpl {
 
         donorDTO.setDonorId(donor.getDonorId());
         donorDTO.setBirthdate(donor.getBirthdate());
-        donorDTO.setUsername(donor.getUsername());
-        donorDTO.setEmail(donor.getEmail());
         donorDTO.setName(donor.getName());
         donorDTO.setSurname(donor.getSurname());
-        donorDTO.setPassword(donor.getPassword());
         donorDTO.setGender(donor.getGender().toString());
         donorDTO.setBloodType(donor.getBloodType().toString());
         donorDTO.setCity(donor.getCity());
@@ -48,7 +44,6 @@ public class DonorMapperImpl {
         return donorDTO;
     }
 
-//    @Override
     public Donor toMap(DonorDTO donorDTO) {
         if (donorDTO == null){
             return null;
@@ -58,9 +53,6 @@ public class DonorMapperImpl {
 
         donor.setDonorId(donorDTO.getDonorId());
         donor.setBirthdate(donorDTO.getBirthdate());
-        donor.setUsername(donorDTO.getUsername());
-        donor.setEmail(donorDTO.getEmail());
-        donor.setPassword(donorDTO.getPassword());
         donor.setName(donorDTO.getName());
         donor.setSurname(donorDTO.getSurname());
         donor.setGender(Gender.valueOf(donorDTO.getGender()));
@@ -76,7 +68,6 @@ public class DonorMapperImpl {
         return donor;
     }
 
-//    @Override
     public List<DonorDTO> toListDto(List<Donor> list) {
         if(list == null){
             return null;
@@ -89,7 +80,6 @@ public class DonorMapperImpl {
         return listDto;
     }
 
-//    @Override
     public List<Donor> toList(List<DonorDTO> listDto) {
         if(listDto == null){
             return null;

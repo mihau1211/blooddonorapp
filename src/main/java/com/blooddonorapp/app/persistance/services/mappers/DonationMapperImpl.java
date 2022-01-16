@@ -12,7 +12,6 @@ import java.util.List;
 
 @Component
 public class DonationMapperImpl {
-//    @Override
     public DonationDTO toDto(Donation donation) {
         if(donation == null){
             return null;
@@ -30,7 +29,6 @@ public class DonationMapperImpl {
         return donationDTO;
     }
 
-//    @Override
     public Donation toMap(DonationDTO donationDTO) {
         if(donationDTO == null){
             return null;
@@ -48,7 +46,6 @@ public class DonationMapperImpl {
         return donation;
     }
 
-//    @Override
     public List<DonationDTO> toListDto(List<Donation> list) {
         if(list == null){
             return null;
@@ -61,7 +58,6 @@ public class DonationMapperImpl {
         return listDto;
     }
 
-//    @Override
     public List<Donation> toList(List<DonationDTO> listDto) {
         if(listDto == null){
             return null;

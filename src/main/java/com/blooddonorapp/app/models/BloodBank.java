@@ -15,9 +15,6 @@ public class BloodBank {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bloodBankId;
-    private String username;
-    private String email;
-    private String password;
     private String city;
     private String donationCenter;
 
@@ -30,8 +27,4 @@ public class BloodBank {
 
     @OneToMany(mappedBy = "bloodBank", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private List<Donor> donors;
-
-    public void addDonor(Donor donor){
-        donors.add(donor);
-    }
 }

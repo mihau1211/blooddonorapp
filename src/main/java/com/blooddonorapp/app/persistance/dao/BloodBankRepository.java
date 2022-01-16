@@ -1,6 +1,7 @@
 package com.blooddonorapp.app.persistance.dao;
 
 import com.blooddonorapp.app.models.BloodBank;
+import com.blooddonorapp.app.models.Donor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,11 +22,7 @@ public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
     @Override
     void deleteById(Long id);
 
-    Optional<BloodBank> findByUsername(String username);
-
-    Optional<BloodBank> findByEmail(String email);
-
     List<BloodBank> findByCity(String city);
 
-//    Optional<BloodBank> findByDonor(Long id);
+    Optional<BloodBank> findByDonor(Donor donor);
 }

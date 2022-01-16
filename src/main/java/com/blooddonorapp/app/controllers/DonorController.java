@@ -1,6 +1,5 @@
 package com.blooddonorapp.app.controllers;
 
-import com.blooddonorapp.app.persistance.entities.DonationDTO;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
 import com.blooddonorapp.app.persistance.services.DonorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +44,6 @@ public class DonorController {
     @GetMapping("/{id}")
     public ResponseEntity<DonorDTO> findById(@PathVariable Long id){
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
-    }
-
-    @GetMapping("/username/{username}")
-    public ResponseEntity<DonorDTO> findByUsername(@PathVariable String username){
-        return new ResponseEntity<>(service.findByUsername(username), HttpStatus.OK);
-    }
-
-    @GetMapping("/email/{email}")
-    public ResponseEntity<DonorDTO> findByEmail(@PathVariable String email){
-        return new ResponseEntity<>(service.findByEmail(email), HttpStatus.OK);
     }
 
     @GetMapping("/surname/{surname}")

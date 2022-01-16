@@ -2,20 +2,16 @@ package com.blooddonorapp.app.persistance.services;
 
 import com.blooddonorapp.app.exceptions.bloodBank.BloodBankNotFoundException;
 import com.blooddonorapp.app.exceptions.donation.DonationNotFoundException;
-import com.blooddonorapp.app.exceptions.donor.DonorNotFoundAdvice;
 import com.blooddonorapp.app.exceptions.donor.DonorNotFoundException;
-import com.blooddonorapp.app.exceptions.donor.DonorNotFoundLoginException;
 import com.blooddonorapp.app.models.*;
 import com.blooddonorapp.app.persistance.dao.BloodBankRepository;
 import com.blooddonorapp.app.persistance.dao.DonationRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
 import com.blooddonorapp.app.persistance.services.mappers.DonorMapperImpl;
-//import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 @Service
@@ -39,10 +35,6 @@ public class DonorService {
 
     private DonorNotFoundException donorNotFoundException(Long id){
         return new DonorNotFoundException(id);
-    }
-
-    private DonorNotFoundLoginException donorNotFoundLoginException(String message){
-        return new DonorNotFoundLoginException(message);
     }
 
     private BloodBankNotFoundException bloodBankNotFoundException(Long id){
@@ -83,21 +75,11 @@ public class DonorService {
             donor.setBloodBank(bloodBank);
         }
 
-        DonorDTO updateDonor = donorMapper.toDto(donor);
         if (donorDTO.getDonorId() != null){
             donor.setDonorId(donorDTO.getDonorId());
         }
         if (donorDTO.getBirthdate() != null){
             donor.setBirthdate(donorDTO.getBirthdate());
-        }
-        if (donorDTO.getUsername() != null){
-            donor.setUsername(donorDTO.getUsername());
-        }
-        if (donorDTO.getEmail() != null){
-            donor.setEmail(donorDTO.getEmail());
-        }
-        if (donorDTO.getPassword() != null){
-            donor.setPassword(donorDTO.getPassword());
         }
         if (donorDTO.getName() != null){
             donor.setName(donorDTO.getName());
@@ -128,16 +110,6 @@ public class DonorService {
         }
 
         return donorMapper.toDto(repository.save(donor));
-    }
-
-    public DonorDTO findByUsername(final String username){
-        Optional<Donor> optionalDonor = repository.findByUsername(username);
-        return donorMapper.toDto(optionalDonor.orElseThrow(() -> donorNotFoundLoginException("Donor with given username does not exist.")));
-    }
-
-    public DonorDTO findByEmail(final String email){
-        Optional<Donor> optionalDonor = repository.findByEmail(email);
-        return donorMapper.toDto(optionalDonor.orElseThrow(() -> donorNotFoundLoginException("Donor with given email does not exist.")));
     }
 
     public List<DonorDTO> findBySurname(final String surname){
