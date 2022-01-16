@@ -25,7 +25,7 @@ public class DonationController {
         return new ResponseEntity<>(service.save(donationDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<DonationDTO> update(@PathVariable Long id, @RequestBody DonationDTO donationDTO){
         return new ResponseEntity<>(service.update(id, donationDTO), HttpStatus.OK);
     }

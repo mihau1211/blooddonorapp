@@ -27,6 +27,9 @@ public class DonorDTO {
     private String gender;
     private String bloodType;
     private String city;
+    private int numberOfDonations;
+    private Date firstDonationDate;
+    private Date lastDonationDate;
     private int points;
     private List<DonationDTO> donations;
 }

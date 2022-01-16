@@ -25,7 +25,7 @@ public class BloodBankController {
         return new ResponseEntity<>(service.save(bloodBankDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<BloodBankDTO> update(@PathVariable Long id, @RequestBody BloodBankDTO bloodBankDTO){
         return new ResponseEntity<>(service.update(id, bloodBankDTO), HttpStatus.OK);
     }

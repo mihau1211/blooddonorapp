@@ -1,8 +1,10 @@
 package com.blooddonorapp.app.controllers;
 
+import com.blooddonorapp.app.persistance.entities.DonationDTO;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
 import com.blooddonorapp.app.persistance.services.DonorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,11 @@ public class DonorController {
     @PostMapping
     public ResponseEntity<DonorDTO> save(@RequestBody DonorDTO donorDTO){
         return new ResponseEntity<>(service.save(donorDTO), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<DonorDTO> update(@PathVariable Long id, @RequestBody DonorDTO donorDTO){
+        return new ResponseEntity<>(service.update(id, donorDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -71,7 +78,7 @@ public class DonorController {
     }
 
     @GetMapping("/birthdate/{date}")
-    public ResponseEntity<List<DonorDTO>> findByBirthdate(@PathVariable Date birthdate){
+    public ResponseEntity<List<DonorDTO>> findByBirthdate(@PathVariable("date") @DateTimeFormat(iso= DateTimeFormat.ISO.DATE) Date birthdate){
         return new ResponseEntity<>(service.findByBirthdate(birthdate), HttpStatus.OK);
     }
 

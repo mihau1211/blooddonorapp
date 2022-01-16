@@ -1,6 +1,8 @@
 package com.blooddonorapp.app.persistance.dao;
 
+import com.blooddonorapp.app.models.BloodType;
 import com.blooddonorapp.app.models.Donor;
+import com.blooddonorapp.app.models.Gender;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -29,9 +31,9 @@ public interface DonorRepository extends JpaRepository<Donor, Long> {
 
     List<Donor> findBySurname(String surname);
 
-    List<Donor> findByGender(String gender);
+    List<Donor> findByGender(Gender gender);
 
-    List<Donor> findByBloodType(String bloodType);
+    List<Donor> findByBloodType(BloodType bloodType);
 
     List<Donor> findByCity(String city);
 

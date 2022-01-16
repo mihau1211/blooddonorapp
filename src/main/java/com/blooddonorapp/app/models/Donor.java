@@ -31,14 +31,14 @@ public class Donor {
     private Date lastDonationDate;
     private int points;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public Donor(Long donorId) {
+        this.donorId = donorId;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "bloodBankId")
     private BloodBank bloodBank;
 
-    @OneToMany(mappedBy="donor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="donor", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Donation> donations;
-
-    public void addDonation(Donation donation){
-        this.donations.add(donation);
-    }
 }

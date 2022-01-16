@@ -21,10 +21,14 @@ public class BloodBank {
     private String city;
     private String donationCenter;
 
-    @OneToMany(mappedBy="bloodBank", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public BloodBank(Long bloodBankId) {
+        this.bloodBankId = bloodBankId;
+    }
+
+    @OneToMany(mappedBy="bloodBank", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private List<Donation> donations;
 
-    @OneToMany(mappedBy = "bloodBank", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "bloodBank", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private List<Donor> donors;
 
     public void addDonor(Donor donor){

@@ -15,12 +15,16 @@ public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long donationId;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name="donorId", nullable=false)
     private Donor donor;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name="bloodBankId", nullable=false)
     private BloodBank bloodBank;
+
+    public Donation(Long donationId) {
+        this.donationId = donationId;
+    }
 
     private Date donationDate;
     private BloodType bloodType;
