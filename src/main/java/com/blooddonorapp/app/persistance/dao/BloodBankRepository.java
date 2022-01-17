@@ -24,5 +24,5 @@ public interface BloodBankRepository extends JpaRepository<BloodBank, Long> {
 
     List<BloodBank> findByCity(String city);
 
-    Optional<BloodBank> findByDonor(Donor donor);
+//    Optional<BloodBank> findByDonorId(Long id);
 }

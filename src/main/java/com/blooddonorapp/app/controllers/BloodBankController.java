@@ -1,6 +1,7 @@
 package com.blooddonorapp.app.controllers;
 
 
+import com.blooddonorapp.app.models.Donor;
 import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
 import com.blooddonorapp.app.persistance.services.BloodBankService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,7 @@ public class BloodBankController {
     }
 
     @GetMapping("/donor/{id}")
-    public ResponseEntity<BloodBankDTO> findByUsername(@PathVariable Long id){
+    public ResponseEntity<BloodBankDTO> findByDonorId(@PathVariable Long id){
         return new ResponseEntity<>(service.findByDonorId(id), HttpStatus.OK);
-
     }
 }

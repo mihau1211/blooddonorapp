@@ -12,7 +12,6 @@ import com.blooddonorapp.app.persistance.dao.DonationRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.DonationDTO;
 import com.blooddonorapp.app.persistance.services.mappers.DonationMapperImpl;
-import com.blooddonorapp.app.persistance.services.validators.DonationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +25,13 @@ public class DonationService {
     private DonationRepository repository;
     private DonorRepository donorRepository;
     private BloodBankRepository bloodBankRepository;
-    private DonationValidator donationValidator;
 
     @Autowired
-    public DonationService(DonationMapperImpl donationMapper, DonationRepository repository, DonorRepository donorRepository, BloodBankRepository bloodBankRepository, DonationValidator donationValidator) {
+    public DonationService(DonationMapperImpl donationMapper, DonationRepository repository, DonorRepository donorRepository, BloodBankRepository bloodBankRepository) {
         this.repository = repository;
         this.donationMapper = donationMapper;
         this.donorRepository = donorRepository;
         this.bloodBankRepository = bloodBankRepository;
-        this.donationValidator = donationValidator;
     }
 
     private DonationNotFoundException donationNotFoundException(Long id){

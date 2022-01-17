@@ -1,8 +1,10 @@
 package com.blooddonorapp.app.persistance.entities;
 
+import com.blooddonorapp.app.models.BloodBank;
 import lombok.*;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor
@@ -10,11 +12,14 @@ import javax.persistence.Id;
 @Data
 @Getter
 @Setter
-public class UserDTO {
+public class SystemUserDTO {
     @Id
     private Long userId;
     private String username;
     private String email;
     private String password;
-    private String role;
+    private String userRole;
+    private Date lastLogin;
+    private Long bloodBankId;
+    private Long donorId;
 }

@@ -3,9 +3,9 @@ package com.blooddonorapp.app.persistance.services;
 import com.blooddonorapp.app.exceptions.user.UserEmailNotFoundException;
 import com.blooddonorapp.app.exceptions.user.UserNotFoundException;
 import com.blooddonorapp.app.exceptions.user.UserUsernameNotFoundException;
-import com.blooddonorapp.app.models.User;
+import com.blooddonorapp.app.models.SystemUser;
 import com.blooddonorapp.app.persistance.dao.UserRepository;
-import com.blooddonorapp.app.persistance.entities.UserDTO;
+import com.blooddonorapp.app.persistance.entities.SystemUserDTO;
 import com.blooddonorapp.app.persistance.services.mappers.UserMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,19 +36,19 @@ public class UserService {
         return new UserEmailNotFoundException(email);
     }
 
-    public UserDTO save(final UserDTO userDTO){
-        User user = repository.save(mapper.toMap(userDTO));
+    public SystemUserDTO save(final SystemUserDTO userDTO){
+        SystemUser user = repository.save(mapper.toMap(userDTO));
 
         return mapper.toDto(user);
     }
 
-    public UserDTO findById(final Long id){
-        Optional<User> optionalUser = repository.findById(id);
+    public SystemUserDTO findById(final Long id){
+        Optional<SystemUser> optionalUser = repository.findById(id);
 
         return mapper.toDto(optionalUser.orElseThrow(() -> userNotFoundException(id)));
     }
 
-    public List<UserDTO> findAll() {
+    public List<SystemUserDTO> findAll() {
         return mapper.toListDto(repository.findAll());
     }
 
@@ -60,8 +60,8 @@ public class UserService {
         }
     }
 
-    public UserDTO update(final Long id, final UserDTO userDTO){
-        User user = repository.findById(id).orElseThrow(() -> userNotFoundException(id));
+    public SystemUserDTO update(final Long id, final SystemUserDTO userDTO){
+        SystemUser user = repository.findById(id).orElseThrow(() -> userNotFoundException(id));
 
         if (userDTO.getUserId() != null){
             user.setUserId(userDTO.getUserId());
@@ -76,15 +76,22 @@ public class UserService {
         return mapper.toDto(repository.save(user));
     }
 
-    public UserDTO findByUsername(final String username) {
-        Optional<User> optionalUser = repository.findByUsername(username);
+    public SystemUserDTO findByUsername(final String username) {
+        Optional<SystemUser> optionalUser = repository.findByUsername(username);
 
         return mapper.toDto(optionalUser.orElseThrow(() -> userUsernameNotFoundException(username)));
     }
 
-    public UserDTO findByEmail(final String email){
-        Optional<User> optionalUser = repository.findByEmail(email);
+    public SystemUserDTO findByEmail(final String email){
+        Optional<SystemUser> optionalUser = repository.findByEmail(email);
 
         return mapper.toDto(optionalUser.orElseThrow(() -> userEmailNotFoundException(email)));
+    }
+
+    public boolean login(final SystemUserDTO userDTO){
+        Optional<SystemUser> user = repository.findByUsername(userDTO.getUsername());
+        if (user.isEmpty())
+            return false;
+        return user.get().getPassword().equals(userDTO.getPassword());
     }
 }

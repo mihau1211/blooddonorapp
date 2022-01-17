@@ -16,9 +16,6 @@ import java.util.List;
 public class BloodBankDTO {
     @Id
     private Long bloodBankId;
-    private String username;
-    private String email;
-    private String password;
     private String city;
     private String donationCenter;
     private List<DonationDTO> donations;

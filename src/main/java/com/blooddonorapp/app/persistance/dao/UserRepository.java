@@ -1,6 +1,6 @@
 package com.blooddonorapp.app.persistance.dao;
 
-import com.blooddonorapp.app.models.User;
+import com.blooddonorapp.app.models.SystemUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -8,22 +8,20 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<SystemUser, Long> {
     @Override
-    User save(User user);
+    SystemUser save(SystemUser user);
 
     @Override
-    List<User> findAll();
+    List<SystemUser> findAll();
 
     @Override
-    Optional<User> findById(Long id);
+    Optional<SystemUser> findById(Long id);
 
     @Override
     void deleteById(Long id);
 
-    Optional<User> findByUsername(String username);
+    Optional<SystemUser> findByUsername(String username);
 
-    Optional<User> findByEmail(String email);
-
-    List<User> findByRole(String role);
+    Optional<SystemUser> findByEmail(String email);
 }

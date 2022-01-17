@@ -17,9 +17,6 @@ public class DonorDTO {
     private Long donorId;
     private Long bloodBankId;
     private Date birthdate;
-    private String username;
-    private String email;
-    private String password;
     private String name;
     private String surname;
     private String gender;

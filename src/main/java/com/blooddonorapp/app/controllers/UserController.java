@@ -1,14 +1,12 @@
 package com.blooddonorapp.app.controllers;
 
-import com.blooddonorapp.app.persistance.entities.UserDTO;
+import com.blooddonorapp.app.persistance.entities.SystemUserDTO;
 import com.blooddonorapp.app.persistance.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
-import javax.print.DocFlavor;
 import java.util.List;
 
 @RestController
@@ -22,12 +20,12 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> save(@RequestBody UserDTO userDTO){
+    public ResponseEntity<SystemUserDTO> save(@RequestBody SystemUserDTO userDTO){
         return new ResponseEntity<>(service.save(userDTO), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO userDTO){
+    public ResponseEntity<SystemUserDTO> update(@PathVariable Long id, @RequestBody SystemUserDTO userDTO){
         return new ResponseEntity<>(service.update(id, userDTO), HttpStatus.OK);
     }
 
@@ -37,22 +35,27 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> findAll(){
+    public ResponseEntity<List<SystemUserDTO>> findAll(){
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+    public ResponseEntity<SystemUserDTO> findById(@PathVariable Long id){
         return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<UserDTO> findByUsername(@PathVariable String username){
+    public ResponseEntity<SystemUserDTO> findByUsername(@PathVariable String username){
         return new ResponseEntity<>(service.findByUsername(username), HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserDTO> findByEmail(@PathVariable String email){
+    public ResponseEntity<SystemUserDTO> findByEmail(@PathVariable String email){
         return new ResponseEntity<>(service.findByEmail(email), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> login(@RequestBody SystemUserDTO userDTO){
+        return new ResponseEntity<>(service.login(userDTO), HttpStatus.OK);
     }
 }
