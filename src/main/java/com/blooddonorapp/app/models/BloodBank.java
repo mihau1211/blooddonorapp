@@ -17,6 +17,8 @@ public class BloodBank {
     private Long bloodBankId;
     private String city;
     private String donationCenter;
+    private Double latitude;
+    private Double longitude;
 
     public BloodBank(Long bloodBankId) {
         this.bloodBankId = bloodBankId;

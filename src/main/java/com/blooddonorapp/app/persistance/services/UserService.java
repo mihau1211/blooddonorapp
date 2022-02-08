@@ -5,6 +5,7 @@ import com.blooddonorapp.app.exceptions.user.UserNotFoundException;
 import com.blooddonorapp.app.exceptions.user.UserUsernameNotFoundException;
 import com.blooddonorapp.app.models.SystemUser;
 import com.blooddonorapp.app.persistance.dao.UserRepository;
+import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
 import com.blooddonorapp.app.persistance.entities.SystemUserDTO;
 import com.blooddonorapp.app.persistance.services.mappers.UserMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,10 +89,14 @@ public class UserService {
         return mapper.toDto(optionalUser.orElseThrow(() -> userEmailNotFoundException(email)));
     }
 
-    public boolean login(final SystemUserDTO userDTO){
-        Optional<SystemUser> user = repository.findByUsername(userDTO.getUsername());
+    public SystemUserDTO login(final SystemUserDTO userDTO){
+        Optional<SystemUser> user = repository.findByEmail(userDTO.getEmail());
         if (user.isEmpty())
-            return false;
-        return user.get().getPassword().equals(userDTO.getPassword());
+            return null;
+        if(user.get().getPassword().equals(userDTO.getPassword())) {
+            return mapper.toDto(user.get());
+        } else {
+            return null;
+        }
     }
 }

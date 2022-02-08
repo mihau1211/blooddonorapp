@@ -7,6 +7,7 @@ import com.blooddonorapp.app.models.*;
 import com.blooddonorapp.app.persistance.dao.BloodBankRepository;
 import com.blooddonorapp.app.persistance.dao.DonationRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
+import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
 import com.blooddonorapp.app.persistance.services.mappers.DonorMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,4 +139,20 @@ public class DonorService {
 
         return donorMapper.toDto(donor);
     }
+
+//    public BloodBank findNearestBloodBank(Double lng, Double lat){
+//        List<BloodBank> banks = bloodBankRepository.findAll();
+//        Map<BloodBank, Double> distances = new HashMap<>();
+//
+//        for(BloodBank item : banks){
+//            distances.put(item, calcDistance(lng, lat, item));
+//        }
+//        Collections.sort(distances);
+//
+//        return distances.get(0);
+//    }
+//
+//    public Double calcDistance(Double lng, Double lat, BloodBank bank){
+//        return Math.sqrt((Math.pow(lng-bank.getLongitude(), 2)+Math.pow(lat-bank.getLatitude(), 2)));
+//    }
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Boolean> login(@RequestBody SystemUserDTO userDTO){
+    public ResponseEntity<SystemUserDTO> login(@RequestBody SystemUserDTO userDTO){
         return new ResponseEntity<>(service.login(userDTO), HttpStatus.OK);
     }
 }
