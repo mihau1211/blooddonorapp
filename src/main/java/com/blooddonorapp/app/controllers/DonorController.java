@@ -1,5 +1,7 @@
 package com.blooddonorapp.app.controllers;
 
+import com.blooddonorapp.app.models.Localization;
+import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
 import com.blooddonorapp.app.persistance.services.DonorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +77,10 @@ public class DonorController {
     @GetMapping("/donation/{id}")
     public ResponseEntity<DonorDTO> findByDonationId(@PathVariable Long id){
         return new ResponseEntity<>(service.findDonorByDonationId(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/nearest")
+    public ResponseEntity<BloodBankDTO> findNearestBloodBank(@RequestBody Localization localization){
+        return new ResponseEntity<>(service.findNearestBloodBank(localization.getLat(), localization.getLng()), HttpStatus.OK);
     }
 }

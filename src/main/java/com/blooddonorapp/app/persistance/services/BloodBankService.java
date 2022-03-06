@@ -59,6 +59,12 @@ public class BloodBankService {
         if(bloodBankDTO.getDonationCenter() != null){
             bloodBank.setDonationCenter(bloodBankDTO.getDonationCenter());
         }
+        if(bloodBankDTO.getLatitude() != null){
+            bloodBank.setLatitude(bloodBankDTO.getLatitude());
+        }
+        if(bloodBankDTO.getLongitude() != null){
+            bloodBank.setLongitude(bloodBankDTO.getLongitude());
+        }
         if(bloodBankDTO.getDonations() != null){
             bloodBank.setDonations(donationMapper.toList(bloodBankDTO.getDonations()));
         }

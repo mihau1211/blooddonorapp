@@ -9,7 +9,9 @@ import com.blooddonorapp.app.persistance.dao.DonationRepository;
 import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.BloodBankDTO;
 import com.blooddonorapp.app.persistance.entities.DonorDTO;
+import com.blooddonorapp.app.persistance.services.mappers.BloodBankMapperImpl;
 import com.blooddonorapp.app.persistance.services.mappers.DonorMapperImpl;
+import com.fasterxml.jackson.databind.util.TypeKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +20,16 @@ import java.util.*;
 @Service
 public class DonorService {
     private DonorMapperImpl donorMapper;
+    private BloodBankMapperImpl bloodBankMapper;
     private DonorRepository repository;
     private DonationRepository donationRepository;
     private BloodBankRepository bloodBankRepository;
 
     @Autowired
-    public DonorService(DonorMapperImpl donorMapper, DonorRepository repository, DonationRepository donationRepository, BloodBankRepository bloodBankRepository) {
+    public DonorService(DonorMapperImpl donorMapper, BloodBankMapperImpl bloodBankMapper, DonorRepository repository, DonationRepository donationRepository, BloodBankRepository bloodBankRepository) {
         this.repository = repository;
         this.donorMapper = donorMapper;
+        this.bloodBankMapper = bloodBankMapper;
         this.donationRepository = donationRepository;
         this.bloodBankRepository = bloodBankRepository;
     }
@@ -140,19 +144,27 @@ public class DonorService {
         return donorMapper.toDto(donor);
     }
 
-//    public BloodBank findNearestBloodBank(Double lng, Double lat){
-//        List<BloodBank> banks = bloodBankRepository.findAll();
-//        Map<BloodBank, Double> distances = new HashMap<>();
-//
-//        for(BloodBank item : banks){
-//            distances.put(item, calcDistance(lng, lat, item));
-//        }
-//        Collections.sort(distances);
-//
-//        return distances.get(0);
-//    }
-//
-//    public Double calcDistance(Double lng, Double lat, BloodBank bank){
-//        return Math.sqrt((Math.pow(lng-bank.getLongitude(), 2)+Math.pow(lat-bank.getLatitude(), 2)));
-//    }
+    public BloodBankDTO findNearestBloodBank(Double lat, Double lng){
+        List<BloodBank> banks = bloodBankRepository.findAll();
+        Map<BloodBank, Double> distances = new HashMap<>();
+
+        for(BloodBank item : banks){
+            distances.put(item, calcDistance(lat, lng, item));
+        }
+
+        Map.Entry<BloodBank, Double> min = null;
+        for (Map.Entry<BloodBank, Double> entry : distances.entrySet()) {
+            if (min == null || min.getValue() > entry.getValue()) {
+                min = entry;
+            }
+        }
+
+        return bloodBankMapper.toDto(min.getKey());
+    }
+
+    public Double calcDistance(Double lat, Double lng, BloodBank bank){
+        Double x = Math.pow(lng - bank.getLongitude(), 2);
+        Double y = Math.pow(lat - bank.getLatitude(), 2);
+        return Math.sqrt(x+y);
+    }
 }

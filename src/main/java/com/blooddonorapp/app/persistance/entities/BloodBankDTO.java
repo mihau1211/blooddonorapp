@@ -18,6 +18,8 @@ public class BloodBankDTO {
     private Long bloodBankId;
     private String city;
     private String donationCenter;
+    private Double latitude;
+    private Double longitude;
     private List<DonationDTO> donations;
     private List<DonorDTO> donors;
 }

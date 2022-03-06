@@ -15,9 +15,7 @@ import com.blooddonorapp.app.persistance.services.mappers.DonationMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DonationService {
@@ -51,8 +49,23 @@ public class DonationService {
         bloodBankRepository.findById(donationDTO.getBloodBankId()).orElseThrow(() -> bloodBankNotFoundException(donationDTO.getBloodBankId()));
         if(donor.getFirstDonationDate() == null){
             donor.setFirstDonationDate(donationDTO.getDonationDate());
+            donor.setLastDonationDate(donationDTO.getDonationDate());
+        } else {
+            List<Donation> donations = donor.getDonations();
+            List<Date> donationDates = new ArrayList<>();
+
+            for (Donation item : donations){
+                donationDates.add(item.getDonationDate());
+            }
+
+            donationDates.add(donationDTO.getDonationDate());
+
+            Collections.sort(donationDates);
+            System.out.println(donationDates.get(donations.size()-1));
+            donor.setFirstDonationDate(donationDates.get(0));
+            donor.setLastDonationDate(donationDates.get(donationDates.size()-1));
         }
-        donor.setLastDonationDate(donationDTO.getDonationDate());
+
         donor.setNumberOfDonations(donor.getDonations().size()+1);
         donor.setPoints(donor.getPoints()+10);
 

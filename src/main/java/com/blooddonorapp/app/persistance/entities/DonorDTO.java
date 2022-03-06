@@ -26,5 +26,6 @@ public class DonorDTO {
     private Date firstDonationDate;
     private Date lastDonationDate;
     private int points;
+    private int totalDonationAmount;
     private List<DonationDTO> donations;
 }

@@ -40,6 +40,7 @@ public class DonorMapperImpl {
         donorDTO.setPoints(donor.getPoints());
         donorDTO.setBloodBankId(donor.getBloodBank().getBloodBankId());
         donorDTO.setDonations(donationMapper.toListDto(donor.getDonations()));
+        donorDTO.setTotalDonationAmount(donor.computeTotalDonationAmount());
 
         return donorDTO;
     }

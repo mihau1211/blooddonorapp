@@ -31,6 +31,8 @@ public class BloodBankMapperImpl{
         bloodBank.setBloodBankId(bloodBankDTO.getBloodBankId());
         bloodBank.setCity(bloodBankDTO.getCity());
         bloodBank.setDonationCenter(bloodBankDTO.getDonationCenter());
+        bloodBank.setLatitude(bloodBankDTO.getLatitude());
+        bloodBank.setLongitude(bloodBankDTO.getLongitude());
         bloodBank.setDonations(donationMapper.toList(bloodBankDTO.getDonations()));
         bloodBank.setDonors(donorMapper.toList(bloodBankDTO.getDonors()));
 
@@ -48,6 +50,8 @@ public class BloodBankMapperImpl{
         bloodBankDTO.setBloodBankId(bloodBank.getBloodBankId());
         bloodBankDTO.setCity(bloodBank.getCity());
         bloodBankDTO.setDonationCenter(bloodBank.getDonationCenter());
+        bloodBankDTO.setLatitude(bloodBank.getLatitude());
+        bloodBankDTO.setLongitude(bloodBank.getLongitude());
         bloodBankDTO.setDonations(donationMapper.toListDto(bloodBank.getDonations()));
         bloodBankDTO.setDonors(donorMapper.toListDto(bloodBank.getDonors()));
 

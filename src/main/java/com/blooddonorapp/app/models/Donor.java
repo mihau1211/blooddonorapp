@@ -38,4 +38,12 @@ public class Donor {
 
     @OneToMany(mappedBy="donor", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Donation> donations;
+
+    public int computeTotalDonationAmount(){
+        int totalDonationAmount = 0;
+        for(int i=0; i< donations.size(); i++){
+            totalDonationAmount += donations.get(i).getQuantity();
+        }
+        return totalDonationAmount;
+    }
 }
