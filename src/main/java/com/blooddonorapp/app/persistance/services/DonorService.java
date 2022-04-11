@@ -113,6 +113,9 @@ public class DonorService {
         if (donorDTO.getPoints() != 0){
             donor.setPoints(donorDTO.getPoints());
         }
+        if (donorDTO.getGoal() != 0){
+            donor.setGoal(donorDTO.getGoal());
+        }
 
         return donorMapper.toDto(repository.save(donor));
     }
@@ -144,7 +147,10 @@ public class DonorService {
         return donorMapper.toDto(donor);
     }
 
-    public BloodBankDTO findNearestBloodBank(Double lat, Double lng){
+    public BloodBankDTO findNearestBloodBank(String latS, String lngS){
+        System.out.println("lat: "+latS+"\nlng: "+lngS);
+        Double lat = Double.parseDouble(latS);
+        Double lng = Double.parseDouble(lngS);
         List<BloodBank> banks = bloodBankRepository.findAll();
         Map<BloodBank, Double> distances = new HashMap<>();
 

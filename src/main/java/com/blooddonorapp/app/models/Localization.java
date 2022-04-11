@@ -7,6 +7,6 @@ import lombok.*;
 @Getter
 @Setter
 public class Localization {
-    private Double lat;
-    private Double lng;
+    private String lat;
+    private String lng;
 }

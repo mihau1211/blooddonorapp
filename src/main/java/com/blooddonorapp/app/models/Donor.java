@@ -27,6 +27,7 @@ public class Donor {
     private Date firstDonationDate;
     private Date lastDonationDate;
     private int points;
+    private int goal;
 
     public Donor(Long donorId) {
         this.donorId = donorId;

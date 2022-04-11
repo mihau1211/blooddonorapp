@@ -1,7 +1,10 @@
 package com.blooddonorapp.app.persistance.dao;
 
+import com.blooddonorapp.app.models.BloodBank;
+import com.blooddonorapp.app.models.Donor;
 import com.blooddonorapp.app.models.SystemUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,4 +27,8 @@ public interface UserRepository extends JpaRepository<SystemUser, Long> {
     Optional<SystemUser> findByUsername(String username);
 
     Optional<SystemUser> findByEmail(String email);
+
+    Optional<SystemUser> findByDonor(Donor donor);
+
+    Optional<SystemUser> findByBloodBank(BloodBank bloodBank);
 }

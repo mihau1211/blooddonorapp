@@ -38,6 +38,7 @@ public class DonorMapperImpl {
         donorDTO.setFirstDonationDate(donor.getFirstDonationDate());
         donorDTO.setLastDonationDate(donor.getLastDonationDate());
         donorDTO.setPoints(donor.getPoints());
+        donorDTO.setGoal(donor.getGoal());
         donorDTO.setBloodBankId(donor.getBloodBank().getBloodBankId());
         donorDTO.setDonations(donationMapper.toListDto(donor.getDonations()));
         donorDTO.setTotalDonationAmount(donor.computeTotalDonationAmount());
@@ -63,6 +64,7 @@ public class DonorMapperImpl {
         donor.setFirstDonationDate(donorDTO.getFirstDonationDate());
         donor.setLastDonationDate(donorDTO.getLastDonationDate());
         donor.setPoints(donorDTO.getPoints());
+        donor.setGoal(donorDTO.getGoal());
         donor.setBloodBank(new BloodBank(donorDTO.getBloodBankId()));
         donor.setDonations(donationMapper.toList(donorDTO.getDonations()));
 

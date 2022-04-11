@@ -79,7 +79,7 @@ public class DonorController {
         return new ResponseEntity<>(service.findDonorByDonationId(id), HttpStatus.OK);
     }
 
-    @GetMapping("/nearest")
+    @PostMapping("/nearest")
     public ResponseEntity<BloodBankDTO> findNearestBloodBank(@RequestBody Localization localization){
         return new ResponseEntity<>(service.findNearestBloodBank(localization.getLat(), localization.getLng()), HttpStatus.OK);
     }

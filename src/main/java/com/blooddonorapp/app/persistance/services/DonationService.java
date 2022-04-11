@@ -13,6 +13,7 @@ import com.blooddonorapp.app.persistance.dao.DonorRepository;
 import com.blooddonorapp.app.persistance.entities.DonationDTO;
 import com.blooddonorapp.app.persistance.services.mappers.DonationMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -122,8 +123,16 @@ public class DonationService {
 
     public List<DonationDTO> findByDonorId(final Long id){
         Donor donor = donorRepository.findById(id).orElseThrow(() -> donorNotFoundException(id));
+        List<Donation> donations = repository.findByDonor(donor);
 
-        return donationMapper.toListDto(repository.findByDonor(donor));
+        Collections.sort(donations, new Comparator<Donation>() {
+            @Override
+            public int compare(Donation o1, Donation o2) {
+                return o2.getDonationDate().compareTo(o1.getDonationDate());
+            }
+        });
+
+        return donationMapper.toListDto(donations);
     }
 
     public List<DonationDTO> findByBloodBankId(final Long id){
